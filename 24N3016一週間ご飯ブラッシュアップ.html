@@ -35,7 +35,6 @@
 
     .week-meta{margin-top:14px;color:var(--muted);font-size:13px}
 
-    /* gallery grid */
     .grid{display:grid;grid-template-columns:1fr;gap:16px;margin-top:22px}
     @media(min-width:760px){ .grid{grid-template-columns:repeat(2,1fr)} }
     @media(min-width:1080px){ .grid{grid-template-columns:repeat(3,1fr)} }
@@ -50,7 +49,6 @@
 
     .title-under{text-align:center;padding:12px 14px;border-top:1px solid #eef6ff;font-weight:700}
 
-    /* Week layout: emphasize first 7 items as days */
     .day-label{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:6px}
     .hero{
       margin-top:18px;
@@ -65,7 +63,6 @@
     .pill{background:white;padding:8px 10px;border-radius:10px;border:1px solid #e6f0f7;font-size:13px;color:var(--muted)}
 
     footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center;padding-bottom:40px}
-    /* print */
     @media print{
       body{background:white}
       .badge{display:none}
@@ -101,7 +98,6 @@
 
     <main>
       <div class="grid" id="gallery">
-        <!-- JS will render cards here -->
       </div>
     </main>
 
@@ -111,7 +107,7 @@
   </div>
 
   <script>
-    // データ：10枚（最初の7枚は月〜日割り当て）
+    // データ：10枚（最初の7枚は月〜日割り当て
     const ITEMS = [
       { id: "d1", day: "Mon", title: "月曜：ラーメン", img: "1C4A7698-0EB7-481A-AE65-FD20E30C1FFD.jpg", caption: "さっぱりとしたラーメンにカリッとしたギョウザ。" },
       { id: "d2", day: "Tue", title: "火曜：インドカレー", img: "1CFE79AE-C956-4B4A-8022-8D53A6F8FD31.jpg", caption: "カレーに素敵な一言が添えてあるインドカレー屋さん。" },
@@ -120,13 +116,12 @@
       { id: "d5", day: "Fri", title: "金曜：用心棒", img: "871F4A26-C2B1-4BC5-BCC5-F0402A072912.jpg", caption: "店を出ると同時に食べたことを後悔する家系ラーメン。" },
       { id: "d6", day: "Sat", title: "土曜：みそきん", img: "717192B7-CA4D-4921-B58C-2C942B6F58F3.jpg", caption: "みんなで走って間に合ったみそきん。" },
       { id: "d7", day: "Sun", title: "日曜：ミルフィーユ", img: "C2A993E6-AF50-4F79-BBB0-CA151134FDA3.jpg", caption: "おなかに優しいものが食べたいと思い、ミルフィーユ。" },
-      // 追加スナップ（週の余白）
+
       { id: "s1", title: "ローストビーフ", img: "S__40820739.jpg", caption: "たまにはおしゃれにカフェでごはん。" },
       { id: "s2", title: "ラーメン", img: "F1CB38B2-38D8-450D-9803-344663918499.jpg", caption: "卵が主役すぎるラーメン。" },
       { id: "s3", title: "月見そば", img: "F7F1CDD7-D00D-44D8-A3F1-2C7CF10E9803.jpg", caption: "スノボする前に腹ごしらえした月見そば。" }
     ];
 
-    // ギャラリー描画
     function buildCard(item, index) {
       const card = document.createElement('article');
       card.className = 'card';
@@ -144,7 +139,6 @@
       meta.className = 'meta';
 
       if (index < 7) {
-        // 月〜日をラベルとして強調
         const day = document.createElement('div');
         day.className = 'day-label';
         day.textContent = (index < 7 && item.day) ? `${item.day}` : '';
@@ -153,7 +147,7 @@
 
       const caption = document.createElement('div');
       caption.className = 'caption';
-      // caption にタグ風要素 + メインの一言
+
       const tag = document.createElement('span');
       tag.className = 'tag';
       tag.textContent = item.id && item.id.startsWith('d') ? '本日の主役' : 'その他お気に入り';
@@ -163,10 +157,8 @@
       text.textContent = ' ' + (item.caption || '');
       caption.appendChild(text);
 
-      // NOTE: Removed duplicate note/title here to avoid repeating title below the image.
-      // Title will appear only in the "title-under" element below.
 
-      // 組み立て
+
       meta.appendChild(caption);
 
       media.appendChild(img);
@@ -185,18 +177,16 @@
     function renderGallery() {
       const container = document.getElementById('gallery');
       container.innerHTML = '';
-      // 優先表示：最初に7日分（Mon..Sun）を並べ、その後にスナップ
       ITEMS.forEach((it, i) => {
         const card = buildCard(it, i);
         container.appendChild(card);
       });
     }
 
-    // weekRange を自動設定（今週の月曜〜日曜）
     function setWeekRange() {
       const today = new Date();
-      // 週の最初を月曜として計算
-      const day = today.getDay(); // Sun=0, Mon=1...
+
+      const day = today.getDay(); 
       const diffToMon = (day === 0) ? -6 : (1 - day);
       const monday = new Date(today);
       monday.setDate(today.getDate() + diffToMon);
