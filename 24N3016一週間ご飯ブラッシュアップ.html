@@ -197,9 +197,20 @@
       document.getElementById('year').textContent = new Date().getFullYear();
     }
 
+
     // init
     setWeekRange();
     renderGallery();
+  {
+  "version": 2,
+  "builds": [
+    { "src": "index.html", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
+}
+
   </script>
 </body>
 </html>
